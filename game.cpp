@@ -14,13 +14,15 @@ ofstream cout("log");
 
 Player player(30,20);
 
+vector<Enemy> enemies;
+
 int main()
 {
 	
 	disp::init();
 	int ch;
 	long double acttime = time(0);
-	vector<Enemy> enemies;
+	
 	for(int i = 1;i < 4; i++)
 	{
 		Enemy e(5*i,5);
@@ -29,8 +31,9 @@ int main()
 	while((ch=disp::key())!='q')
 	{
 		player.key(ch);
+		player.act();
 		player.render();
-		for_each(enemies.begin(),enemies.end(),[&](Enemy& e) {e.act();e.render();});
+		for_each(enemies.begin(),enemies.end(),[&](Enemy& e) {player.collide(e);e.act();e.render();});
 		disp::show();
 		nanosleep((struct timespec[]){{0, 5000000}}, NULL);
 	}
