@@ -10,7 +10,7 @@ class Bullet{
 		Bullet(int x, int y, float dy);
 		void render();
 		void act();
-		bool collide(Enemy e);
+		bool collide(Enemy& e);
 		int getX();
 		int getY();
 };

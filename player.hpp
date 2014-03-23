@@ -14,6 +14,6 @@ class Player{
 		void key(int c);
 		void render();
 		void act();
-		void collide(Enemy e);
+		bool collide(Enemy& e);
 };
 #endif /*INC_PLAYER_H*/

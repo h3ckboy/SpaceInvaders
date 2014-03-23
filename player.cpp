@@ -31,9 +31,10 @@ void Player::act()
 	(*bullet).act();
 }
 
-void Player::collide(Enemy e)
+bool Player::collide(Enemy& e)
 {
-	if((*bullet).collide(e))bullet = new Bullet();
+	if((*bullet).collide(e)){bullet = new Bullet();return true;}
+	return false;
 }
 
 Player::~Player()

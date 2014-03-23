@@ -26,7 +26,7 @@ void Bullet::act()
 	if(y<0)dy = 0;
 }
 
-bool Bullet::collide(Enemy e)
+bool Bullet::collide(Enemy& e)
 {
 	return e.collide(*this);
 }

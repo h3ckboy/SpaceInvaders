@@ -23,17 +23,19 @@ int main()
 	int ch;
 	long double acttime = time(0);
 	
-	for(int i = 1;i < 4; i++)
+	for(int i = 1;i < 10; i++)
 	{
 		Enemy e(5*i,5);
 		enemies.push_back(e);
 	}
+	int enemy_left = enemies.size();
 	while((ch=disp::key())!='q')
 	{
 		player.key(ch);
 		player.act();
 		player.render();
-		for_each(enemies.begin(),enemies.end(),[&](Enemy& e) {player.collide(e);e.act();e.render();});
+		for_each(enemies.begin(),enemies.end(),[&](Enemy& e) {if(player.collide(e))enemy_left--;e.act();e.render();});
+		if(!enemy_left)break;
 		disp::show();
 		nanosleep((struct timespec[]){{0, 5000000}}, NULL);
 	}
