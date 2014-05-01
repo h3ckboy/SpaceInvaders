@@ -1,19 +1,22 @@
 #include "enemy.hpp"
 #include "display.hpp"
 #include "bullet.hpp"
-#include <fstream>
-#include <cmath>
-#include <iostream>
+#include "util.hpp"
 
-float Enemy::dx = 0.05;
+float Enemy::dx = 0.02;
+int Enemy::dr = 0;
 
 
-Enemy::Enemy(int ix, int iy)
+Enemy::Enemy(int ix, int iy, std::string isprite)
 {
 	x = (float)ix;
 	y = (float)iy;
-	sprite = "[---]";
+	sprite = isprite;
 	destroyed = false;
+}
+
+Enemy::~Enemy()
+{
 }
 
 void Enemy::act()
@@ -22,13 +25,14 @@ void Enemy::act()
 	{
 	}else{
 		x += dx;
-		if(x > 50 || x< 0)dx *= -1;
+		if(x > 70 || x< 0){dx *= -1;dr++;}
 	}
 }
 
 void Enemy::render()
 {
-	disp::render((int)x,(int)y,sprite.c_str());
+	disp::render((int)x,(int)y+dr,sprite.c_str());
+	//(*bullet).render();
 }
 
 void Enemy::setString(std::string str)
@@ -38,7 +42,7 @@ void Enemy::setString(std::string str)
 
 bool Enemy::collide(Bullet& b)
 {
-	if(b.getX() >= x && b.getX() <= x + sprite.size()&& b.getY() == y)
+	if(b.getX() >= x && b.getX() <= x + sprite.size()&& b.getY() == y+dr)
 	{
 		destroyed = true;
 		setString("");

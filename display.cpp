@@ -7,6 +7,8 @@ namespace disp{
 
 const int LEFT = KEY_LEFT;
 const int RIGHT = KEY_RIGHT;
+int WIDTH;
+int HEIGHT;
 
 void render(int x, int y, std::string str)
 {
@@ -25,6 +27,7 @@ void init()
 	nodelay(stdscr,TRUE);
 	keypad(stdscr, TRUE);
 	curs_set(0);
+	getmaxyx(stdscr,HEIGHT,WIDTH);
 }
 
 void close()

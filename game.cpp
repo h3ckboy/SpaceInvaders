@@ -25,7 +25,9 @@ int main()
 	
 	for(int i = 1;i < 10; i++)
 	{
-		Enemy e(5*i,5);
+		Enemy e = Enemy(7*i,5, "[---]");
+		enemies.push_back(e);
+		e = Enemy(7*i,3,"(...)");
 		enemies.push_back(e);
 	}
 	int enemy_left = enemies.size();
@@ -37,7 +39,7 @@ int main()
 		for_each(enemies.begin(),enemies.end(),[&](Enemy& e) {if(player.collide(e))enemy_left--;e.act();e.render();});
 		if(!enemy_left)break;
 		disp::show();
-		nanosleep((struct timespec[]){{0, 5000000}}, NULL);
+		nanosleep((const struct timespec[]){{0, 5000000}}, NULL);
 	}
 	disp::close();
 }

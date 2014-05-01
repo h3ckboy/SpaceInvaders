@@ -11,6 +11,8 @@ namespace disp{
 	int key();
 	extern const int LEFT;
 	extern const int RIGHT;
+	extern int WIDTH;
+	extern int HEIGHT;
 
 }
 
