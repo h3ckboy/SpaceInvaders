@@ -1,29 +1,31 @@
 #include "bullet.hpp"
 #include "display.hpp"
+#include <iostream>
 
-Bullet::Bullet(int ix, int iy,float idy)
+Bullet::Bullet(float ix, float iy,float idy)
 {
-	x = (float)ix;
-	y = (float)iy;
+	x = ix;
+	y = iy;
 	dy = idy;
 }
 
 Bullet::Bullet()
 {
 	x = 0;
-	y = 0;
+	y = -1;
 	dy = 0;
 }
 
 void Bullet::render()
 {
-	if(dy!=0)disp::render((int)x,(int)y,"|");
+	if(dy!=0)disp::draw(x,y,0.1,0.1,0);
 }
 
-void Bullet::act()
+void Bullet::act(double delta)
 {
-	y+= dy;
-	if(y<0)dy = 0;
+	y+= dy*delta*100;
+
+	if(y>1)dy = 0;
 }
 
 bool Bullet::collide(Enemy& e)
@@ -31,5 +33,5 @@ bool Bullet::collide(Enemy& e)
 	return e.collide(*this);
 }
 
-int Bullet::getX(){return (int)x;}
-int Bullet::getY(){return (int)y;}
+float Bullet::getX(){return x;}
+float Bullet::getY(){return y;}

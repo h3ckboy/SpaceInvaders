@@ -2,16 +2,16 @@
 #include "display.hpp"
 #include "bullet.hpp"
 #include "util.hpp"
+#include <iostream>
 
-float Enemy::dx = 0.02;
+float Enemy::dx = Enemy::SPEED;
 int Enemy::dr = 0;
 
 
-Enemy::Enemy(int ix, int iy, std::string isprite)
+Enemy::Enemy(float ix, float iy)
 {
-	x = (float)ix;
-	y = (float)iy;
-	sprite = isprite;
+	x = ix;
+	y = iy;
 	destroyed = false;
 }
 
@@ -19,33 +19,31 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::act()
+void Enemy::act(double delta)
 {
 	if(destroyed)
 	{
 	}else{
-		x += dx;
-		if(x > 70 || x< 0){dx *= -1;dr++;}
+		float old_dx = dx;
+		float* this_dx = &dx;
+		if(x+WIDTH>1){this_dx= &old_dx;dx=-SPEED;dr++;}
+		if(x<-1){dx=SPEED;dr++;}
+		x += (*this_dx)*delta*100;
 	}
 }
 
 void Enemy::render()
 {
-	disp::render((int)x,(int)y+dr,sprite.c_str());
+	disp::draw(x,y,WIDTH,HEIGHT,0);
 	//(*bullet).render();
-}
-
-void Enemy::setString(std::string str)
-{
-	sprite = str;
 }
 
 bool Enemy::collide(Bullet& b)
 {
-	if(b.getX() >= x && b.getX() <= x + sprite.size()&& b.getY() == y+dr)
+	if(b.getX() >= x && (b.getX() <= x + WIDTH)&& (b.getY() >= y+dr)&&(b.getY()<=y+dr+HEIGHT))
 	{
+		std::cout<<"asfasdf"<<std::endl;
 		destroyed = true;
-		setString("");
 		return true;
 	}
 	return false;

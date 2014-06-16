@@ -7,12 +7,12 @@ class Bullet{
 	float x, y,dx,dy;
 	public:
 		Bullet();
-		Bullet(int x, int y, float dy);
+		Bullet(float x, float y, float dy);
 		void render();
-		void act();
+		void act(double delta);
 		bool collide(Enemy& e);
-		int getX();
-		int getY();
+		float getX();
+		float getY();
 };
 
 #endif

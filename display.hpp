@@ -4,13 +4,12 @@
 #include <string>
 
 namespace disp{
-	void render(int x, int y, std::string str);
-	void init();
-	void show();
+	void draw(float x, float y,float width, float height, int texture);
+	bool loop();
+	bool init();
 	void close();
-	int key();
-	extern const int LEFT;
-	extern const int RIGHT;
+	double time();
+	extern int keys[256];
 	extern int WIDTH;
 	extern int HEIGHT;
 

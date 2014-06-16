@@ -2,33 +2,31 @@
 #include "display.hpp"
 #include <iostream>
 
-Player::Player(int ix, int iy)
+
+Player::Player(float ix, float iy)
 {
 	x = ix;
 	y = iy;
 	bullet = new Bullet();
-
 }
 
-void Player::key(int c)
-{
-	if(c==disp::LEFT)
-		x-=3;
-	else if(c==disp::RIGHT)
-		x+=3;
-	else if(c==' ')
-		bullet = new Bullet(x,y-1,-0.05);
-}
 
 void Player::render()
 {
-	disp::render(x,y,"===");
+	disp::draw(x,y,WIDTH,HEIGHT,0);
 	(*bullet).render();
 }
 
-void Player::act()
+void Player::act(double delta)
 {
-	(*bullet).act();
+	dx=0;
+	dy=0;
+        if(disp::keys['D'])dx=SPEED;
+        if(disp::keys['A'])dx=-SPEED;
+	if(disp::keys[32])bullet = new Bullet(x+WIDTH/2,y,80);
+	x+=dx*delta*100;
+	y+=dy*delta*100;
+	(*bullet).act(delta);
 }
 
 bool Player::collide(Enemy& e)

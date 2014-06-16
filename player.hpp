@@ -5,15 +5,19 @@
 #include "enemy.hpp"
 
 class Player{
-	int x;
-	int y;
+	float x;
+	float y;
+	float dx;
+	float dy;
 	Bullet* bullet;
+	static constexpr float WIDTH = 0.2f;
+	static constexpr float HEIGHT = 0.2f;
+	static constexpr float SPEED = 60.f;
 	public:
-		Player(int x, int y);
+		Player(float x, float y);
 		~Player();
-		void key(int c);
 		void render();
-		void act();
+		void act(double delta);
 		bool collide(Enemy& e);
 };
 #endif /*INC_PLAYER_H*/
